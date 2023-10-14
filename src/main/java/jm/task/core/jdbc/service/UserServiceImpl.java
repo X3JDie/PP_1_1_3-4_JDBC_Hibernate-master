@@ -14,8 +14,8 @@ public class UserServiceImpl implements UserService {
 
     }
 
-
     public void dropUsersTable() {
+
         userDao.dropUsersTable();
     }
 
@@ -25,22 +25,21 @@ public class UserServiceImpl implements UserService {
     }
 
     public void removeUserById(long id) {
+
         userDao.removeUserById(id);
     }
 
     public List<User> getAllUsers() {
 
         List<User> users = userDao.getAllUsers();
-        int count = 0;
         for (User user : users) {
             System.out.println("Пользователь : " + user);
-            count++;
         }
-        System.out.println(count);
         return users;
     }
 
     public void cleanUsersTable() {
+
         userDao.cleanUsersTable();
     }
 }

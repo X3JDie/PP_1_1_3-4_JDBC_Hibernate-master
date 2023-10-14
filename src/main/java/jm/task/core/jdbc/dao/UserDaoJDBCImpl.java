@@ -32,21 +32,21 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void saveUser(String name, String lastName, byte age) {
-        try (PreparedStatement pstm = connection.prepareStatement
+        try (PreparedStatement preparedStatement = connection.prepareStatement
                 ("INSERT INTO user (name, lastname, age) VALUES (?, ?, ?)")) {
-            pstm.setString(1, name);
-            pstm.setString(2, lastName);
-            pstm.setByte(3, age);
-            pstm.executeUpdate();
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, lastName);
+            preparedStatement.setByte(3, age);
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public void removeUserById(long id) {
-        try (PreparedStatement pstm = connection.prepareStatement("DELETE FROM user WHERE id = ?")) {
-            pstm.setLong(1, id);
-            pstm.executeUpdate();
+        try (PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM user WHERE id = ?")) {
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -56,7 +56,7 @@ public class UserDaoJDBCImpl implements UserDao {
         List<User> users = new ArrayList<>();
 
         try (ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM user")) {
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 User user = new User(resultSet.getString("name"),
                         resultSet.getString("lastname"), resultSet.getByte("age"));
                 user.setId(resultSet.getLong("id"));
@@ -69,7 +69,7 @@ public class UserDaoJDBCImpl implements UserDao {
         return users;
     }
 
-     public void cleanUsersTable() {
+    public void cleanUsersTable() {
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate("TRUNCATE TABLE user");
         } catch (SQLException e) {
